@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Exiled.API.Features;
 using System.Timers;
+using MEC;
 
 namespace GuardToMtf
 {
@@ -39,7 +40,40 @@ namespace GuardToMtf
                     {
                         if (UnityEngine.Vector3.Distance(player.Position, Escape) < 10f)
                         {
+                            var InventoryList = new List<ItemType>();
+
+
+                             foreach (var item in player.Items)
+                            {
+                                InventoryList.Add(item.Type);
+                            }
                             player.SetRole(RoleType.NtfSergeant);
+
+                            Timing.CallDelayed(2, () =>
+                            {
+
+
+                                    foreach (var item in InventoryList)
+                                    {
+
+                                    if (player.IsInventoryFull)
+                                    {
+                                        int Count = 0;
+
+                                        foreach (var ItemFull in player.Items)
+                                        {
+                                            Count += 1;
+                                            if(Count == 8) {
+                                                player.DropItem(ItemFull);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                        player.AddItem(item);
+                                    }
+
+                            });
+                           
                         }
                     }
                 }
