@@ -47,32 +47,10 @@ namespace GuardToMtf
                             {
                                 InventoryList.Add(item.Type);
                             }
+                            player.DropItems();
+
                             player.SetRole(RoleType.NtfSergeant);
 
-                            Timing.CallDelayed(2, () =>
-                            {
-
-
-                                    foreach (var item in InventoryList)
-                                    {
-
-                                    if (player.IsInventoryFull)
-                                    {
-                                        int Count = 0;
-
-                                        foreach (var ItemFull in player.Items)
-                                        {
-                                            Count += 1;
-                                            if(Count == 8) {
-                                                player.DropItem(ItemFull);
-                                                break;
-                                            }
-                                        }
-                                    }
-                                        player.AddItem(item);
-                                    }
-
-                            });
                            
                         }
                     }
